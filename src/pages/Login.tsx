@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
+import { LoginRoute } from "../utils/APIRoutes";
 
 export default function Login() {
 
@@ -39,10 +40,9 @@ export default function Login() {
         }
         const optionsRequest = {
             method: "GET",
-            url: "https://v3.football.api-sports.io/status",
+            url: LoginRoute,
             headers: {
-              "x-rapidapi-host": "v3.football.api-sports.io",
-              "x-rapidapi-key": valuesForm.apiKey
+              "x-apisports-key": valuesForm.apiKey
             }
         };
 
