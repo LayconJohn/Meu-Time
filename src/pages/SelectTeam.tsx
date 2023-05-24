@@ -5,11 +5,16 @@ import { GetAllTimesRoute, KEY_API } from "../utils/APIRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOptions } from "../protocols/toastProtocol";
+import Countries from "../components/Countries";
 
 
+//TO-DO: Listar e escolher o país (ou liga)
 
-export default function TeamDashboard() {
-    const [teamName, setTeamName] = useState("Real Madrid");
+//TO-DO: Listar e escolher o time do país (ou liga)
+export default function SelectTeam() {
+    const [countries, setCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState(undefined);
+    const [teams, setTeams] = useState([]);
     const [team, setTeam] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
@@ -37,9 +42,9 @@ export default function TeamDashboard() {
                     }
                 };
                 const { data } = await axios.request(optionsRequest);
-                console.log(data);
+                //console.log(data);
                 setIsLoading(false);
-                setTeam(data.response);
+                setCountries(data.response);
             } catch (error) {
                 console.log(error);
                 //toast.error("Erro ao carregar os times", toastOptions);
@@ -55,7 +60,18 @@ export default function TeamDashboard() {
                 "Is loading"
                 : 
                 <Container>
-                    
+                    <>
+                        <h3>Primeiro, escolha seu país</h3>
+                        <Countries 
+                            setSelectedCountry={setSelectedCountry}
+                            countries={countries} 
+                        />
+                    </>
+                    {selectedCountry !== undefined && (
+                        <div>
+                            <h3>Agora, selecione seu time</h3>
+                        </div>
+                    )}
                 </Container> 
             }
             <ToastContainer />
@@ -64,5 +80,20 @@ export default function TeamDashboard() {
 }
 
 const Container = styled.div`
+    height:100vh;
+    width:100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    background-color: #31233E;
+
+    h3 {
+        color: white;
+        font-size: 20px;
+        margin-top: 3rem;
+    }
+
 
 `;

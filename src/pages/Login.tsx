@@ -15,7 +15,7 @@ export default function Login() {
 
     useEffect(() => {
         if(localStorage.getItem("current-user")) {
-            navigate("/")
+            navigate("/select-team")
         }
     }, [])
 
