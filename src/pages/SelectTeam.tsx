@@ -6,9 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOptions } from "../protocols/toastProtocol";
 import Countries from "../components/Countries";
+import Teams from "../components/Teams";
 
-
-//TO-DO: Listar e escolher o país (ou liga)
 
 //TO-DO: Listar e escolher o time do país (ou liga)
 export default function SelectTeam() {
@@ -68,9 +67,16 @@ export default function SelectTeam() {
                         />
                     </>
                     {selectedCountry !== undefined && (
-                        <div>
+                        <>
                             <h3>Agora, selecione seu time</h3>
-                        </div>
+                            <Teams 
+                                setTeam={setTeam}
+                                setTeams={setTeams}
+                                teams={teams} 
+                                setCurrentUser={setCurrentUser}
+                                selectedCountry={selectedCountry}
+                            />
+                        </>
                     )}
                 </Container> 
             }
