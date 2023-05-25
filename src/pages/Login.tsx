@@ -27,7 +27,7 @@ export default function Login() {
         e.preventDefault();
         if (await validateKEY()) {
             localStorage.setItem("current-user", JSON.stringify(valuesForm));
-            navigate("/");
+            navigate("/select-team");
         } else {
             alert("KEY invalid");
         }

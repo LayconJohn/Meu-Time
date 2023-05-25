@@ -7,10 +7,34 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastOptions } from "../protocols/toastProtocol";
 import Countries from "../components/Countries";
 import Teams from "../components/Teams";
+import { useNavigate } from "react-router-dom"; 
 
+type Team = {
+    team: {
+        id?: number;
+        name: string | undefined;
+        code: string | undefined;
+        country: string | undefined;
+        founded: number | undefined;
+        national: boolean;
+        logo: string | undefined;
+    },
+    venue: {
+        id: number,
+        name: string | undefined,
+        address: string | undefined,
+        city: string | undefined,
+        capacity: number | undefined,
+        surface: string | undefined,
+        image: string | undefined
+    }
+}
 
 //TO-DO: Listar e escolher o time do país (ou liga)
 export default function SelectTeam() {
+
+    const navigate = useNavigate();
+
     const [countries, setCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(undefined);
     const [teams, setTeams] = useState([]);
@@ -26,6 +50,16 @@ export default function SelectTeam() {
         draggable: true,
         theme: 'light',
     };
+
+    useEffect(() => {
+        async function fecthData() {
+            const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
+            if (currenTeam) {
+                navigate("/");
+            }
+        }
+        fecthData();
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -53,6 +87,15 @@ export default function SelectTeam() {
         fetchData();
     }, []);
 
+    function selectTeam(team: Team) {
+        if (!team) {
+            alert("Time não selecionado!");
+            return;
+        }
+        localStorage.setItem("current-team", JSON.stringify(team.team));
+        navigate("/");
+    }
+
     return (
         <>
             {isLoading ?
@@ -76,6 +119,9 @@ export default function SelectTeam() {
                                 setCurrentUser={setCurrentUser}
                                 selectedCountry={selectedCountry}
                             />
+                            <button onClick={() => selectTeam(team)}>
+                                Selecionar time
+                            </button>
                         </>
                     )}
                 </Container> 

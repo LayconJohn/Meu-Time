@@ -3,9 +3,25 @@ import styled from "styled-components";
 import axios from "axios";
 import { GetAllTimesRoute } from "../utils/APIRoutes";
 
-type Country = {
-    flag: string | undefined;
-    name: string | undefined;
+type Team = {
+    team: {
+        id?: number;
+        name: string | undefined;
+        code: string | undefined;
+        country: string | undefined;
+        founded: number | undefined;
+        national: boolean;
+        logo: string | undefined;
+    },
+    venue: {
+        id: number,
+        name: string | undefined,
+        address: string | undefined,
+        city: string | undefined,
+        capacity: number | undefined,
+        surface: string | undefined,
+        image: string | undefined
+    }
 }
 
 export default function Teams({ teams, setTeam, setTeams, setCurrentUser, selectedCountry }) {
@@ -13,9 +29,9 @@ export default function Teams({ teams, setTeam, setTeams, setCurrentUser, select
     const [currentSelected, setCurrentSelected] = useState(undefined);
     const [isLoading, setIsLoading] = useState(true);
 
-    function changeCountry(index: React.Key | number, country: Country) {
+    function changeTeam(index: React.Key | number, team: Team) {
         setCurrentSelected(index);
-        setTeam(country);
+        setTeam(team);
     }
 
     useEffect(() => {
@@ -47,19 +63,19 @@ export default function Teams({ teams, setTeam, setTeams, setCurrentUser, select
     return (
         <>
         <Container selected={currentSelected ? "50%" : "100%"}>
-            <div className="countries">
-                {teams.map((country: Country, i: React.Key | number) => {
+            <div className="teams">
+                {teams.map((team: Team, i: React.Key | number) => {
                     return(
                         <div 
-                            className={`country ${i === currentSelected ? "selected" : ""}`} 
+                            className={`team ${i === currentSelected ? "selected" : ""}`} 
                             key={i}
-                            onClick={() => changeCountry(i, country)}    
+                            onClick={() => changeTeam(i, team)}    
                         >
-                            <div className="flag">
-                                <img src={country.flag} alt={country.name}/>
+                            <div className="logo">
+                                <img src={team.team.logo} alt={team.team.code}/>
                             </div>
-                            <div className="country-name">
-                                <p>{country.name}</p>
+                            <div className="team-name">
+                                <p>{team.team.name}</p>
                             </div>
                         </div>
                     )
@@ -77,7 +93,7 @@ const Container = styled.div`
     background-color: #671045;
     height: ${props => props.selected};
 
-    .countries {
+    .teams {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -94,7 +110,7 @@ const Container = styled.div`
             }
         }
 
-        .country {
+        .team {
             background-color: #ffffff39;
             min-height: 5rem;
             width: 90%;
@@ -106,13 +122,13 @@ const Container = styled.div`
             align-items: center;
             transition: 0.5s ease-in-out;
 
-            .flag {
+            .logo {
                 img {
                     height: 2rem;
                 }
             }
 
-            .country-name {
+            .team-name {
                 p {
                     color: white;
                 }
