@@ -147,5 +147,24 @@ const Container = styled.div`
         margin-top: 3rem;
     }
 
+    button {
+      background-color: #671045;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 0.4rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      transition: 0.5s ease-in-out;
+      &:hover {
+        background-color: #4e0eff;
+      }
+      &:active{
+        scale: 1.2;
+        transform: translateY(3px)
+      }
+    }
 
 `;
