@@ -42,13 +42,13 @@ export default function Teams({ teams, setTeam, setTeams, setCurrentUser, select
                 
                 const optionsRequest = {
                     method: "GET",
-                    url: `${GetAllTimesRoute}/teams?country=${selectedCountry.name}`,
+                    url: `${GetAllTimesRoute}?country=${selectedCountry.name}`,
                     headers: {
                       "x-apisports-key": user.apiKey
                     }
                 };
                 const { data } = await axios.request(optionsRequest);
-                //console.log(data);
+                console.log(data);
                 setIsLoading(false);
                 setTeams(data.response);
             } catch (error) {
@@ -99,16 +99,8 @@ const Container = styled.div`
         align-items: center;
         overflow: auto;
         padding-top: 1.5rem;
-        gap: 0.8rem;&::-webkit-scrollbar {
-            width: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            &-thum: {
-                background-color: black;
-                width: 0.9rem;
-                border-radius: 1rem;
-                border: 1px solid rgba(255, 255, 255, 0.9);
-            }
-        }
+        gap: 0.8rem;
+
 
         .team {
             background-color: #ffffff39;

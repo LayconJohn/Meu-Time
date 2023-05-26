@@ -5,11 +5,14 @@ import { GetAllTimesRoute, KEY_API } from "../utils/APIRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOptions } from "../protocols/toastProtocol";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function TeamDashboard() {
-    const [teamName, setTeamName] = useState("Real Madrid");
+    const navigate = useNavigate();
+
+    const [teamName, setTeamName] = useState(undefined);
     const [team, setTeam] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
@@ -24,6 +27,20 @@ export default function TeamDashboard() {
     };
 
     useEffect(() => {
+        async function fecthData() {
+            const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
+            if (!currenTeam) {
+                navigate("/select-team");
+                return
+            }
+            console.log(currenTeam);
+            setTeamName(currenTeam.name);
+        }
+        fecthData();
+    }, []);
+
+    //TO-DO: Adaptar para pegar o time selecionado
+    useEffect(() => {
         async function fetchData() {
             try {
                 const user = await JSON.parse(`${localStorage.getItem("current-user")}`);
@@ -31,7 +48,7 @@ export default function TeamDashboard() {
                 
                 const optionsRequest = {
                     method: "GET",
-                    url: `${GetAllTimesRoute}/countries`,
+                    url: `${GetAllTimesRoute}?name=${teamName}`,
                     headers: {
                       "x-apisports-key": user.apiKey
                     }
