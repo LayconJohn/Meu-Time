@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastOptions } from "../protocols/toastProtocol";
 import { useNavigate } from "react-router-dom";
+import Players from "../components/Players";
 
 type Team = {
     team: {
@@ -93,10 +94,13 @@ export default function TeamDashboard() {
                 "Is loading"
                 : 
                 <Container>
-                    <h3>Como eu amo o {team.team.name}</h3>
-                    <div className="logo">
-                        <img src={team.team.logo} alt={team.team.code}/>
+                    <div className="team-description">
+                        <h3>Como eu amo o {team.team.name}</h3>
+                        <div className="logo">
+                            <img src={team.team.logo} alt={team.team.code}/>
+                        </div>
                     </div>
+
                     <div className="options-team">
                         {options.map((option, i) => {
                             return(
@@ -110,6 +114,11 @@ export default function TeamDashboard() {
                             )
                         })}
                     </div>
+                    {currentSelected === 0 ?
+                    <Players currentUser={currentUser}/> 
+                    : 
+                    ""
+                    }
                 </Container> 
             }
             <ToastContainer />
@@ -131,6 +140,17 @@ const Container = styled.div`
         color: white;
         font-size: 20px;
         margin-top: 3rem;
+    }
+
+    .team-description {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        
+        h3{
+            margin-bottom: 1rem;
+        }
     }
 
     .options-team {
