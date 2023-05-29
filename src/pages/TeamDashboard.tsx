@@ -101,24 +101,27 @@ export default function TeamDashboard() {
                         </div>
                     </div>
 
-                    <div className="options-team">
-                        {options.map((option, i) => {
-                            return(
-                                <div 
-                                    className={`option ${i === currentSelected ? "selected" : ""}`} 
-                                    key={i}
-                                    onClick={() => changeOption(i, team)}    
-                                >
-                                    {option}
-                                </div>
-                            )
-                        })}
+                    <div className="options">
+                        <div className="options-team">
+                            {options.map((option, i) => {
+                                return(
+                                    <div 
+                                        className={`option ${i === currentSelected ? "selected" : ""}`} 
+                                        key={i}
+                                        onClick={() => changeOption(i, team)}    
+                                    >
+                                        {option}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                        {currentSelected === 0 ?
+                        <Players currentUser={currentUser}/> 
+                        : 
+                        ""
+                        }
                     </div>
-                    {currentSelected === 0 ?
-                    <Players currentUser={currentUser}/> 
-                    : 
-                    ""
-                    }
+
                 </Container> 
             }
             <ToastContainer />
@@ -132,9 +135,11 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
     align-items: center;
     background-color: #31233E;
+    box-sizing: border-box;
 
     h3 {
         color: white;
@@ -151,6 +156,14 @@ const Container = styled.div`
         h3{
             margin-bottom: 1rem;
         }
+    }
+
+    .options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        gap: 1rem;
     }
 
     .options-team {
