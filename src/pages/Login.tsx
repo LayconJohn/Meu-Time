@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import logo from "../assets/logo.png";
 import { LoginRoute } from "../utils/APIRoutes";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Login() {
 
@@ -29,7 +31,7 @@ export default function Login() {
             localStorage.setItem("current-user", JSON.stringify(valuesForm));
             navigate("/select-team");
         } else {
-            alert("KEY invalid");
+            toast.error("Key inválida")
         }
     } 
 
@@ -90,6 +92,7 @@ export default function Login() {
                     Entrar
                 </button>
             </form>
+            <ToastContainer />
         </Container>
     )
 }

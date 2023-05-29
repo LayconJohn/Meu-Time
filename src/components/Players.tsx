@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { GetPlayersRoute } from "../utils/APIRoutes";
 import axios from "axios";
-import { ToastOptions } from "../protocols/toastProtocol";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

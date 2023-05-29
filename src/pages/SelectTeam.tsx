@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { GetAllTimesRoute, KEY_API } from "../utils/APIRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { ToastOptions } from "../protocols/toastProtocol";
 import Countries from "../components/Countries";
 import Teams from "../components/Teams";
 import { useNavigate } from "react-router-dom"; 
@@ -41,15 +40,6 @@ export default function SelectTeam() {
     const [team, setTeam] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
-    const toastOptions: ToastOptions = {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light',
-    };
 
     useEffect(() => {
         async function fecthData() {
@@ -80,8 +70,7 @@ export default function SelectTeam() {
                 setCountries(data.response);
             } catch (error) {
                 console.log(error);
-                //toast.error("Erro ao carregar os times", toastOptions);
-                alert("Erro ao carregar os times");
+                toast.error("Erro ao carregar os times");
             }
         }
         fetchData();

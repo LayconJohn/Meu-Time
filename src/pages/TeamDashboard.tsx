@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { GetAllTimesRoute, KEY_API } from "../utils/APIRoutes";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
-import { ToastOptions } from "../protocols/toastProtocol";
 import { useNavigate } from "react-router-dom";
 import Players from "../components/Players";
 
@@ -42,15 +41,6 @@ export default function TeamDashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [currentSelected, setCurrentSelected] = useState(undefined);
-    const toastOptions: ToastOptions = {
-        position: 'bottom-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: 'light',
-    };
 
     function changeOption(index: number, team: Team) {
         setCurrentSelected(index);
@@ -81,8 +71,7 @@ export default function TeamDashboard() {
                 setTeam(data.response[0]);
             } catch (error) {
                 console.log(error);
-                //toast.error("Erro ao carregar os times", toastOptions);
-                alert("Erro ao carregar o time");
+                toast.error("Erro ao carregar os times");
             }
         }
         fetchData();

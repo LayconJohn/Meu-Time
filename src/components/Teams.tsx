@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { GetAllTimesRoute } from "../utils/APIRoutes";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Team = {
     team: {
@@ -53,8 +55,7 @@ export default function Teams({ teams, setTeam, setTeams, setCurrentUser, select
                 setTeams(data.response);
             } catch (error) {
                 console.log(error);
-                //toast.error("Erro ao carregar os times", toastOptions);
-                alert("Erro ao carregar os times");
+                toast.error("Erro ao carregar os times", toastOptions);
             }
         }
         fetchData();
@@ -81,6 +82,7 @@ export default function Teams({ teams, setTeam, setTeams, setCurrentUser, select
                     )
                 })}
             </div>
+            <ToastContainer />
         </Container>
         </>
 
