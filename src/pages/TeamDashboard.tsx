@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Players from "../components/Players";
+import Formation from "../components/Formation";
 
 type Team = {
     team: {
@@ -41,6 +42,8 @@ export default function TeamDashboard() {
     const [isLoading, setIsLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [currentSelected, setCurrentSelected] = useState(undefined);
+    const [season, setSeason] = useState("");
+    const [currentLeague, setCurrentLeague] = useState(undefined);
 
     function changeOption(index: number, team: Team) {
         setCurrentSelected(index);
@@ -66,7 +69,7 @@ export default function TeamDashboard() {
                     }
                 };
                 const { data } = await axios.request(optionsRequest);
-                console.log(data);
+                //console.log(data);
                 setIsLoading(false);
                 setTeam(data.response[0]);
             } catch (error) {
@@ -105,8 +108,20 @@ export default function TeamDashboard() {
                             })}
                         </div>
                         {currentSelected === 0 ?
-                        <Players currentUser={currentUser}/> 
+                        <Players 
+                            currentUser={currentUser}
+                            season={season}
+                            setSeason={setSeason}    
+                        /> 
                         : 
+                        currentSelected === 1 ?
+                        <Formation 
+                            currentUser={currentUser}
+                            season={season}
+                            currentLeague={currentLeague}
+                            setCurrentLeague={setCurrentLeague}
+                        />
+                        :
                         ""
                         }
                     </div>

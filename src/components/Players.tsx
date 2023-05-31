@@ -5,9 +5,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Players({ currentUser }) {
+export default function Players({ currentUser, season, setSeason }) {
 
-    const [season, setSeason] = useState("");
     const [players, setPlayers] = useState([]);
 
     function handleChange(e: { target: { name: string; value: string; }; }) {
@@ -29,7 +28,7 @@ export default function Players({ currentUser }) {
                 }
             };
             const { data } = await axios.request(optionsRequest);
-            console.log(data.response);
+            //console.log(data.response);
             setPlayers(data.response);
         } catch (error) {
             toast.error("Erro ao selecionar os jogadores");
