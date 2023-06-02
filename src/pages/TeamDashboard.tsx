@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Players from "../components/Players";
 import Formation from "../components/Formation";
+import Results from "../components/Results";
 
 type Team = {
     team: {
@@ -35,7 +36,7 @@ export default function TeamDashboard() {
         "Lista de jogadores",
         "Formação mais utilizada",
         "Tabela de resultados",
-        "Tabela de resultados"
+        "Gráfico de Resultados"
     ]
 
     const [team, setTeam] = useState({});
@@ -108,21 +109,28 @@ export default function TeamDashboard() {
                             })}
                         </div>
                         {currentSelected === 0 ?
-                        <Players 
-                            currentUser={currentUser}
-                            season={season}
-                            setSeason={setSeason}    
-                        /> 
+                            <Players 
+                                currentUser={currentUser}
+                                season={season}
+                                setSeason={setSeason}    
+                            /> 
                         : 
-                        currentSelected === 1 ?
-                        <Formation 
-                            currentUser={currentUser}
-                            season={season}
-                            currentLeague={currentLeague}
-                            setCurrentLeague={setCurrentLeague}
-                        />
-                        :
-                        ""
+                            currentSelected === 1 ?
+                                <Formation 
+                                    currentUser={currentUser}
+                                    season={season}
+                                    currentLeague={currentLeague}
+                                    setCurrentLeague={setCurrentLeague}
+                                />
+                            :
+                                currentSelected === 2 ? 
+                                    <Results 
+                                        currentUser={currentUser}
+                                        season={season}
+                                        currentLeague={currentLeague}
+                                    /> 
+                                : 
+                                    ""
                         }
                     </div>
 

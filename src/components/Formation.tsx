@@ -78,10 +78,10 @@ export default function Formation({ currentUser, season, currentLeague, setCurre
             }
             <div className="formation">
                 <div className="league-logo">
-                    <img src={currentLeague.logo} alt={currentLeague.name}/>
+                    <img src={currentLeague ? currentLeague.logo : ""} alt={currentLeague? currentLeague.name : ""}/>
                 </div>
                 <span>
-                    A formação utilizada nessa liga é: {formation.formation}
+                    A formação utilizada nessa liga é: {formation ? formation.formation : ""}
                 </span>
             </div>
             <ToastContainer />
