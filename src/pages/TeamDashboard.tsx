@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Players from "../components/Players";
 import Formation from "../components/Formation";
 import Results from "../components/Results";
+import Goals from "../components/Goals";
 
 type Team = {
     team: {
@@ -130,7 +131,14 @@ export default function TeamDashboard() {
                                         currentLeague={currentLeague}
                                     /> 
                                 : 
-                                    ""
+                                    currentSelected === 3 ? 
+                                        <Goals 
+                                            currentUser={currentUser}
+                                            season={season}
+                                            currentLeague={currentLeague}
+                                        /> 
+                                    : 
+                                        ""
                         }
                     </div>
 

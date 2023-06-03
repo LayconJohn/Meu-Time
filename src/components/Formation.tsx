@@ -21,6 +21,7 @@ export default function Formation({ currentUser, season, currentLeague, setCurre
         setCurrentLeague(league);
         if (season === "") {
             toast.error("Por favor, antes selecione uma temporada");
+            return;
         }
         try {
             const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
@@ -41,6 +42,10 @@ export default function Formation({ currentUser, season, currentLeague, setCurre
 
     useEffect(() => {
         async function fetchData() {
+            if (season === "") {
+                toast("Por favor selecione uma temporada");
+                return;
+            }
             try {
                 const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
                 const optionsRequest = {

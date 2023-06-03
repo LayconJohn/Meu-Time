@@ -14,6 +14,14 @@ export default function Results({ currentUser, season, currentLeague }) {
 
     useEffect(() => {
         async function fetchData() {
+            if (season === "") {
+                toast("Por favor selecione uma temporada");
+                return;
+            }
+            if (!currentLeague) {
+                toast("Por favor selecione uma Liga");
+                return;
+            }
             try {
                 const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
                 const optionsRequest = {
@@ -24,7 +32,7 @@ export default function Results({ currentUser, season, currentLeague }) {
                     }
                 };
                 const { data } = await axios.request(optionsRequest);
-                console.log(data.response);
+                //console.log(data.response);
                 setMatches(data.response.fixtures.played);
                 setWins(data.response.fixtures.wins);
                 setDraws(data.response.fixtures.draws);
