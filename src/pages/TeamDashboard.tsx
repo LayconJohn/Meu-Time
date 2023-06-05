@@ -89,9 +89,9 @@ export default function TeamDashboard() {
                 : 
                 <Container>
                     <div className="team-description">
-                        <h3>Como eu amo o {team.team.name}</h3>
+                        <h3>Como eu amo o {team ? team.team.name : "Futebol"}</h3>
                         <div className="logo">
-                            <img src={team.team.logo} alt={team.team.code}/>
+                            <img src={team ? team.team.logo : ""} alt={team? team.team.code : ""}/>
                         </div>
                     </div>
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 type GoalsByMinutes = {
     "0-15": {
@@ -59,10 +60,9 @@ export default function Goals({ currentUser, season, currentLeague }) {
 
     function selectOptionGoal(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        if (optionsGoals === "for") {
-            toast.success("Gols a favor escolhido com sucesso!");
-        } else {
-            toast.success("Gols contra escolhido com sucesso!");
+        if (!goalsAgainst || !goalsFor) {
+            toast.error("Houve um erro no resultado dos gols");
+            return;
         }
     }
 
@@ -78,6 +78,9 @@ export default function Goals({ currentUser, season, currentLeague }) {
             }
             try {
                 const currenTeam = await JSON.parse(`${localStorage.getItem("current-team")}`);
+                if (!currenTeam) {
+                    toast.error("Selecione um time")
+                }
                 const optionsRequest = {
                     method: "GET",
                     url: `${GetTeamStatisticsRoute}?season=${season}&team=${currenTeam.id}&league=${currentLeague.id}`,
@@ -121,19 +124,33 @@ export default function Goals({ currentUser, season, currentLeague }) {
                 </div>
             : 
                 optionsGoals === "for" ? 
-                    <div className="goals for">
+                    <div className={`goals ${optionsGoals}`}>
                         {minutes.map((minute, i) => {
                             return (
-                                <p>
-                                    {minute}
-                                </p>
+                                <div className="goal" key={i}>
+                                    <p>{minute}</p>  
+                                    <CircularProgressbar
+                                        value={goalsFor[minute] ? goalsFor[minute].percentage : 0} 
+                                        text={`${goalsFor[minute] ? goalsFor[minute].percentage : "0%"}`} 
+                                    />
+                                </div>
                             )
                         })}
                     </div> 
                 : 
-                    <div className="goals against">
-
-                    </div>     
+                    <div className={`goals ${optionsGoals}`}>
+                        {minutes.map((minute, i) => {
+                            return (
+                                <div className="goal" key={i}>
+                                    <p>{minute}</p>  
+                                    <CircularProgressbar
+                                        value={goalsAgainst[minute]? goalsAgainst[minute].percentage : 0} 
+                                        text={`${goalsAgainst[minute] ? goalsAgainst[minute].percentage : "0%"}`} 
+                                    />
+                                </div>
+                            )
+                        })}
+                    </div>   
                 }
             <ToastContainer />
         </Container>
@@ -161,7 +178,7 @@ const Container = styled.div`
 
         form {
             color: white;
-            diplay: flex;
+            display: flex;
             flex-direction: column;
             
             p {
@@ -187,5 +204,35 @@ const Container = styled.div`
                 transition: 0.5s ease-in-out;
             }
         }
+    }
+
+    .goals {
+        height: 600px;
+        display: flex;
+        //flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        background-color: #00000076;
+        gap: 1.5rem;
+        border-radius: 2rem;
+        padding: 3rem 3.8rem;
+        overflow: scroll;
+
+        .goal {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            border-radius: 2rem;
+            padding: 3rem 3.8rem;
+
+            p {
+                color: white;
+            }
+        }
+
     }
 `;
